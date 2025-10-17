@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
-// Parte 4. Creando el Adaptador (Abstracto)
 public abstract class Adaptador extends BaseAdapter {
 
     private final ArrayList<?> entradas;
@@ -44,11 +43,10 @@ public abstract class Adaptador extends BaseAdapter {
     public View getView(int posicion, View view, ViewGroup parent) {
         View v = view;
 
-        // Inflar la vista si es nula (no reciclada)
+        // Inflar la vista si es nula
         if (v == null) {
             LayoutInflater vi = (LayoutInflater)
                     contexto.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            // Uso de attachToRoot=false (mejor práctica)
             v = vi.inflate(R_layout_IdView, parent, false);
         }
 
