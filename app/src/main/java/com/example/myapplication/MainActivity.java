@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView texto;
     private RadioButton radioButton_pulsado;
 
-    // --- Clase Encapsulador (POJO) ---
     public static class Encapsulador {
         private final int imagen;
         private final String titulo;
@@ -39,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean get_CheckBox() { return dato; }
         public void set_CheckBox(boolean estado) { this.dato = estado; }
     }
-
-    // --- Método onCreate ---
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Crear la fuente de datos
         ArrayList<Encapsulador> datos = new ArrayList<>();
-        // Nota: Asegúrate de que R.drawable.ic_android exista en tu proyecto.
         datos.add(new Encapsulador(android.R.drawable.ic_menu_gallery, "Opción Uno", "Detalles de la opción 1", false));
         datos.add(new Encapsulador(android.R.drawable.ic_menu_camera, "Opción Dos", "Detalles de la opción 2", false));
         datos.add(new Encapsulador(android.R.drawable.ic_menu_share, "Opción Tres", "Detalles de la opción 3", false));
@@ -68,21 +65,19 @@ public class MainActivity extends AppCompatActivity {
                     TextView contenido = view.findViewById(R.id.texto_datos);
                     final RadioButton radioButton = view.findViewById(R.id.radio_button_entrada);
 
-                    // Sincronizar datos y estado del RadioButton (Crucial para el reciclaje)
+                    // Sincronizar datos y estado del RadioButton
                     imagen.setImageResource(datosEntrada.get_imagen());
                     titulo.setText(datosEntrada.get_textoTitulo());
                     contenido.setText(datosEntrada.get_textoContenido());
                     radioButton.setChecked(datosEntrada.get_CheckBox());
 
-                    // Almacenar el POJO en el Tag de la vista
                     radioButton.setTag(datosEntrada);
 
-                    // Lógica de selección única
                     radioButton.setOnClickListener(v -> {
                         RadioButton currentRadioButton = (RadioButton) v;
                         Encapsulador currentData = (Encapsulador) currentRadioButton.getTag();
 
-                        // Desmarcar y actualizar el POJO anterior
+                        // Desmarcar y actualizar
                         if (radioButton_pulsado != null && radioButton_pulsado != currentRadioButton) {
                             radioButton_pulsado.setChecked(false);
 
@@ -92,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-                        // Marcar y actualizar el POJO actual
+                        // Marcar y actualizar
                         currentRadioButton.setChecked(true);
                         radioButton_pulsado = currentRadioButton;
                         currentData.set_CheckBox(true);
