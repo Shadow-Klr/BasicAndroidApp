@@ -49,9 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Crear la fuente de datos
         ArrayList<Encapsulador> datos = new ArrayList<>();
-        datos.add(new Encapsulador(android.R.drawable.ic_menu_gallery, "Opción Uno", "Detalles de la opción 1", false));
-        datos.add(new Encapsulador(android.R.drawable.ic_menu_camera, "Opción Dos", "Detalles de la opción 2", false));
-        datos.add(new Encapsulador(android.R.drawable.ic_menu_share, "Opción Tres", "Detalles de la opción 3", false));
+        datos.add(new Encapsulador(R.drawable.drs1, "Dr.Stone Manga 1", "Dr.Stone Manga 1 disponible en amazon", false));
+        datos.add(new Encapsulador(R.drawable.drs2, "Dr.Stone Manga 2", "Dr.Stone Manga 2 disponible en amazon", false));
+        datos.add(new Encapsulador(R.drawable.drs3, "Dr.Stone Manga 3", "Dr.Stone Manga 3 disponible en amazon", false));
+        datos.add(new Encapsulador(R.drawable.drs4, "Dr.Stone Manga 4", "Dr.Stone Manga 4 disponible en amazon", false));
 
         Adaptador adaptador = new Adaptador(this, R.layout.entrada, datos) {
             @Override
