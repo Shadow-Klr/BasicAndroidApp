@@ -23,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
         private final String texto;
         private boolean dato;
 
-        public Encapsulador(int imagen, String textTitulo, String textContenido, boolean favorito) {
+        public Encapsulador(int imagen, String textTitulo, String textContenido, boolean selected) {
             this.imagen = imagen;
             this.titulo = textTitulo;
             this.texto = textContenido;
-            this.dato = favorito;
+            this.dato = selected;
         }
 
         public int get_imagen() { return imagen; }
