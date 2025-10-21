@@ -1,15 +1,12 @@
 package com.example.myapplication;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Button; // ¡IMPORTACIÓN NECESARIA!
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
@@ -17,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView lista;
     private TextView texto;
+    private Button btnClearSelection;
     private RadioButton radioButton_pulsado;
 
     public static class Encapsulador {
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         public boolean get_CheckBox() { return dato; }
         public void set_CheckBox(boolean estado) { this.dato = estado; }
     }
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +45,17 @@ public class MainActivity extends AppCompatActivity {
         lista = findViewById(R.id.list_view);
         texto = findViewById(R.id.footer_text);
 
+        btnClearSelection = findViewById(R.id.btn_clear_selection);
+
         // Crear la fuente de datos
         ArrayList<Encapsulador> datos = new ArrayList<>();
         datos.add(new Encapsulador(R.drawable.drs1, "Dr.Stone Manga 1", "Dr.Stone Manga 1 disponible en amazon", false));
         datos.add(new Encapsulador(R.drawable.drs2, "Dr.Stone Manga 2", "Dr.Stone Manga 2 disponible en amazon", false));
         datos.add(new Encapsulador(R.drawable.drs3, "Dr.Stone Manga 3", "Dr.Stone Manga 3 disponible en amazon", false));
         datos.add(new Encapsulador(R.drawable.drs4, "Dr.Stone Manga 4", "Dr.Stone Manga 4 disponible en amazon", false));
+        datos.add(new Encapsulador(R.drawable.drs5, "Dr.Stone Manga 5", "Dr.Stone Manga 5 disponible en amazon", false));
 
+        // NOTA: Se asume que la clase 'Adaptador' está definida en otro archivo y funciona correctamente
         Adaptador adaptador = new Adaptador(this, R.layout.entrada, datos) {
             @Override
             public void onEntrada(Object entrada, View view) {
@@ -94,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         currentData.set_CheckBox(true);
 
                         // Actualizar el footer
-                        texto.setText("Seleccionado: " + currentData.get_textoTitulo());
+                        texto.setText("Manga Selecinado: " + currentData.get_textoTitulo());
                     });
 
                     // Rastrea el RadioButton inicial si estaba marcado
@@ -104,7 +106,31 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
-
         lista.setAdapter(adaptador);
+
+        // IMPLEMENTACIÓN DEL BOTÓN DE DESMARCAR SELECCIÓN
+        btnClearSelection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 1. Desmarcar el RadioButton visible
+                if (radioButton_pulsado != null) {
+                    radioButton_pulsado.setChecked(false);
+                }
+
+                // 2. Limpiar el estado de selección en la fuente de datos
+                for(Encapsulador item : datos) {
+                    item.set_CheckBox(false);
+                }
+
+                // 3. Resetear la referencia de control
+                radioButton_pulsado = null;
+
+                // 4. Notificar al adaptador para que actualice la vista (necesario para el scroll)
+                adaptador.notifyDataSetChanged();
+
+                // 5. Actualizar el footer
+                texto.setText("Elige un manga");
+            }
+        });
     }
 }
